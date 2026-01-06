@@ -1,0 +1,16 @@
+const express = require("express");
+const User = require("../models/User");
+
+const router = express.Router();
+
+/* Get all doctors */
+router.get("/", async (req, res) => {
+  try {
+    const doctors = await User.find({ role: "doctor" }).select("-password");
+    res.json(doctors);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = router;
